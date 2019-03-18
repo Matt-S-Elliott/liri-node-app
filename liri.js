@@ -21,7 +21,7 @@ inquirer.prompt([
                 message: "What band would you like to see?",
                 name: "artist"
             }
-        ]).then(function(response) {
+        ]).then(function (response) {
             axios.get("https://rest.bandsintown.com/artists/" + response.artist + "/events?app_id=codingbootcamp").then(function (response) {
                 for (i in response.data) {
                     console.log(response.data[i].venue.name);
@@ -34,13 +34,36 @@ inquirer.prompt([
 
     }
     else if (response.userChoice === "spotify-this-song") {
-
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "What song would you like to know about?",
+                name: "song"
+            }
+        ]).then(function (response) {
+            if (response.song.trim() === "") {
+                response.song = "The Sign Ace of Base";
+            }
+            spotify.search({ type: 'track', query: response.song, limit: 1 }, function (err, data) {
+                if (err) {
+                    return console.log('Error occurred: ' + err);
+                }
+                var artists = [];
+                for (i in data.tracks.items[0].artists) {
+                    artists.push(data.tracks.items[0].artists[i].name);
+                }
+                console.log("Artist(s): " + artists.join(", "));
+                console.log("Title: " + data.tracks.items[0].name);
+                console.log("Spotify Link: " + data.tracks.items[0].external_urls.spotify);
+                console.log("Album: " + data.tracks.items[0].album.name);
+            });
+        })
     }
     else if (response.userChoice === "movie-this") {
 
     }
     else if (response.userChoice === "do-what-it-says") {
-        
+
     }
 })
 
