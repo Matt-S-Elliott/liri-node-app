@@ -5,6 +5,7 @@ var spotify = new Spotify(keys.spotify);
 var axios = require("axios");
 var moment = require('moment');
 var inquirer = require("inquirer");
+var fs = require("fs");
 
 inquirer.prompt([
     {
@@ -87,7 +88,13 @@ inquirer.prompt([
         })
     }
     else if (response.userChoice === "do-what-it-says") {
-
+        fs.readFile("random.txt", "utf8", function(error, data) {
+            if (error) {
+              return console.log(error);
+            }
+            var dataArr = data.split(",");
+            console.log(dataArr);
+          });
     }
 })
 
