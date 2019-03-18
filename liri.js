@@ -67,6 +67,9 @@ inquirer.prompt([
                 name: "movie"
             }
         ]).then(function(response) {
+            if (response.movie.trim() === "") {
+                response.movie = "Mr. Nobody";
+            }
             axios.get("http://www.omdbapi.com/?t=" + response.movie + "&y=&plot=short&apikey=trilogy").then(function(response) {
             console.log("Title: " + response.data.Title);
             console.log("Released: " + moment().format("YYYY",response.data.Released));
