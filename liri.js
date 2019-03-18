@@ -60,7 +60,28 @@ inquirer.prompt([
         })
     }
     else if (response.userChoice === "movie-this") {
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "What movie would you like to know about? ",
+                name: "movie"
+            }
+        ]).then(function(response) {
+            axios.get("http://www.omdbapi.com/?t=" + response.movie + "&y=&plot=short&apikey=trilogy").then(function(response) {
+            console.log("Title: " + response.data.Title);
+            console.log("Released: " + moment().format("YYYY",response.data.Released));
+            for (i in response.data.Ratings) {
+                if (response.data.Ratings[i].Source === "Rotten Tomatoes") {
+                    console.log("Rotten Tomatoes Rank: " + response.data.Ratings[i].Value);
+                }
+            }
+            console.log("Country: " + response.data.Country);
+            console.log("Languages: " + response.data.Language);
+            console.log("Plot: " + response.data.Plot);
+            console.log("Actors: " + response.data.Actors);
 
+            })
+        })
     }
     else if (response.userChoice === "do-what-it-says") {
 
