@@ -69,13 +69,13 @@ function readFromFile(dataArr) {
     }
 }
 
-function movieThis (response) {
+function movieThis(response) {
     if (response.userInput.trim() === "") {
         response.userInput = "Mr. Nobody";
     }
     axios.get("http://www.omdbapi.com/?t=" + response.userInput + "&y=&plot=short&apikey=trilogy").then(function (response) {
         console.log("Title: " + response.data.Title);
-        console.log("Released: " + moment().format("YYYY", response.data.Released));
+        console.log("Released: " + moment(response.data.Released).format("YYYY"));
         for (i in response.data.Ratings) {
             if (response.data.Ratings[i].Source === "Rotten Tomatoes") {
                 console.log("Rotten Tomatoes Rank: " + response.data.Ratings[i].Value);
