@@ -20,7 +20,12 @@ inquirer.prompt([
             {
                 type: "input",
                 message: "What band would you like to see?",
-                name: "userInput"
+                name: "userInput",
+                validate: function(userInput) {
+                    if (userInput.trim() === "") {
+                        return false;
+                    } else {return true;}
+                }
             }
         ]).then(concertThis)
 
