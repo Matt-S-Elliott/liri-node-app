@@ -75,7 +75,8 @@ function movieThis(response) {
     }
     axios.get("http://www.omdbapi.com/?t=" + response.userInput + "&y=&plot=short&apikey=trilogy").then(function (response) {
         console.log("Title: " + response.data.Title);
-        console.log("Released: " + moment(response.data.Released).format("YYYY"));
+        console.log("Released: " + moment(response.data.Released, "DD MMM YYYY").format("YYYY"));
+        console.log(response.data.Released);
         for (i in response.data.Ratings) {
             if (response.data.Ratings[i].Source === "Rotten Tomatoes") {
                 console.log("Rotten Tomatoes Rank: " + response.data.Ratings[i].Value);
